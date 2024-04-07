@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/static/bgtweet.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #sentence {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>What's on Your Mind?</h1>
+        <textarea id="sentence" rows="4" cols="50" placeholder="Share your thoughts..."></textarea>
+        <br>
+        <button onclick="analyzeSentiment()">Analyze</button>
+        <br>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function analyzeSentiment() {
+            var sentence = document.getElementById('sentence').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/analyze_sentiment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var results = JSON.parse(xhr.responseText);
+                    var resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    for (var model in results) {
+                        var p = document.createElement('p');
+                        p.innerText = model + ': ' + results[model];
+                        resultsDiv.appendChild(p);
+                    }
+                }
+            };
+            xhr.send('sentence=' + encodeURIComponent(sentence));
+        }
+    </script>
+</body>
+</html>
