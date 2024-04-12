@@ -1,4 +1,4 @@
-## How users can make sense of their social Network ##
+# How users can make sense of their social Network #
 
 Welcome to our repository dedicated to helping you understand your social network better through sentiment analysis. In today's digital world, it's essential to grasp the feelings and opinions hidden within our online interactions.
 
